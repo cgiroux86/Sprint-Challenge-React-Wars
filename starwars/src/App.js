@@ -1,5 +1,8 @@
 import React from 'react';
 import './App.css';
+import CardBuilder from './components/CardBuilder'
+import Header from './components/Header'
+import Footer from './components/Footer'
 
 const App = () => {
   // Try to think through what state you'll need for this app before starting. Then build out
@@ -11,7 +14,9 @@ const App = () => {
 
   return (
     <div className="App">
-      <h1 className="Header">React Wars</h1>
+      <Header/>
+      <CardBuilder/>
+      <Footer/>
     </div>
   );
 }
