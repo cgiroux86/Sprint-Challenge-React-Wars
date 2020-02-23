@@ -1,17 +1,47 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import './App.css';
+import CardBuilder from './components/CardBuilder'
+import Header from './components/Header'
+import Footer from './components/Footer'
+import axios from 'axios'
 
 const App = () => {
-  // Try to think through what state you'll need for this app before starting. Then build out
-  // the state properties here.
 
-  // Fetch characters from the star wars api in an effect hook. Remember, anytime you have a 
-  // side effect in a component, you want to think about which state and/or props it should
-  // sync up with, if any.
+  const [text, setText] = useState()
+  const [search, updateSearch] = useState()
 
+  useEffect(() => {
+    axios.get(`https://swapi.co/api/people/`).then(res => {
+        setText(res.data.results)
+        // setNext(res.data.next)
+        console.log(res.data)
+    })
+},[])
+  function handleClick (e) {
+   updateSearch(e.target.value)
+    console.log(search)
+  }
+
+  function handleSubmit (e) {
+    return handleClick(e); 
+  }
+
+  // const submit = () => {
+  //   text
+  // }
+ 
   return (
     <div className="App">
-      <h1 className="Header">React Wars</h1>
+      <Header/>
+      <CardBuilder/>
+      <form>
+        <input onChange = {(e) => handleClick(e) } type="text" placeholder = 'search character'></input>
+        <button onClick = {(e) => {
+          e.preventDefault()
+          console.log(text.filter((elem) => elem.name === search))
+        }}>submit</button>
+      </form>
+      <Footer/>
     </div>
   );
 }
