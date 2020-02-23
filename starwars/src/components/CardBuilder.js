@@ -15,11 +15,12 @@ import ButtonMaker from './ButtonMaker'
 const CardBuilder = () => {
     const [character,setCharacter] = useState([])
     const [page,setPage] = useState(1)
-
+    const [next, setNext] = useState(null)
     useEffect(() => {
         axios.get(`https://swapi.co/api/people/?page=${page}`).then(res => {
             setCharacter(res.data.results)
-            console.log(res.data.results)
+            setNext(res.data.next)
+            console.log(res.data)
         })
     },[page])
     return (
@@ -29,7 +30,7 @@ const CardBuilder = () => {
                 return <SingleCard key = {i} name = {elem.name} height = {elem.height} weight = {elem.mass} eyeColor = {elem.eye_color} by = {elem.birth_year} vehicles = {elem.vehicles} starships = {elem.starships}/>
             })}
         </Row>
-      <ButtonMaker page = {page} setPage = {setPage}/>
+      <ButtonMaker next = {next} setNext = {setNext} page = {page} setPage = {setPage}/>
     </Container>
     );
 };
